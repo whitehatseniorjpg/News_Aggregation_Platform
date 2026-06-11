@@ -1,0 +1,227 @@
+.newsmanager {
+    padding: 32px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    background: #f5f7fb;
+    min-height: 100vh;
+}
+
+.newsmanager .nm-form {
+    background: var(--background);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: var(--shadow-md);
+    animation: slideInUp 0.5s ease-out;
+}
+
+.newsmanager .nm-form .nm-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+}
+
+.newsmanager .nm-form input,
+.newsmanager .nm-form textarea,
+.newsmanager .nm-form select {
+    width: 100%;
+    border: 2px solid var(--border-gray);
+    border-radius: 10px;
+    padding: 12px 16px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: var(--background);
+    color: var(--text-dark);
+}
+
+.newsmanager .nm-form input:hover,
+.newsmanager .nm-form textarea:hover,
+.newsmanager .nm-form select:hover {
+    border-color: var(--primary-blue);
+}
+
+.newsmanager .nm-form input:focus,
+.newsmanager .nm-form textarea:focus,
+.newsmanager .nm-form select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.newsmanager .nm-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.newsmanager .nm-form input.error,
+.newsmanager .nm-form textarea.error,
+.newsmanager .nm-form select.error {
+    border-color: var(--error-color);
+    background: rgba(255, 71, 87, 0.05);
+}
+
+.newsmanager .nm-form .nm-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.newsmanager .nm-form .nm-row select {
+    width: 100%;
+}
+
+.newsmanager .nm-btns {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    justify-content: flex-end;
+}
+
+.newsmanager .nm-btns button {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.newsmanager .btn-save {
+    background: linear-gradient(135deg, var(--primary-green) 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(6, 167, 125, 0.3);
+}
+
+.newsmanager .btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(6, 167, 125, 0.4);
+}
+
+.newsmanager .btn-cancel {
+    background: var(--accent-gray);
+    color: white;
+    box-shadow: 0 4px 12px rgba(160, 160, 160, 0.2);
+}
+
+.newsmanager .btn-cancel:hover {
+    background: #919191;
+    transform: translateY(-2px);
+}
+.newsmanager .nm-table-container {
+    background: var(--background);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    animation: slideInUp 0.5s ease-out 0.1s both;
+}
+
+.newsmanager .nm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.newsmanager .nm-table th {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #0052cc 100%);
+    color: white;
+    padding: 16px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.newsmanager .nm-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.newsmanager .nm-table tr:hover td {
+    background: var(--background-secondary);
+    transition: background 0.3s ease;
+}
+
+.newsmanager .nm-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.newsmanager .nm-table tbody tr:hover {
+    box-shadow: inset 0 0 0 2px var(--primary-blue);
+}
+
+.newsmanager .nm-table .btn-edit,
+.newsmanager .nm-table .btn-delete {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 6px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.newsmanager .nm-table .btn-edit {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #0052cc 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+}
+
+.newsmanager .nm-table .btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+.newsmanager .nm-table .btn-delete {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+}
+
+.newsmanager .nm-table .btn-delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.newsmanager .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.newsmanager .pagination button {
+    padding: 10px 18px;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #0052cc 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+.newsmanager .pagination button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
+}
+
+.newsmanager .pagination button:disabled {
+    background: var(--accent-gray);
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.5;
+}

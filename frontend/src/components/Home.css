@@ -1,0 +1,399 @@
+/* =========================
+   GLOBAL
+========================= */
+
+body {
+
+    margin: 0;
+
+    padding: 0;
+
+    overflow-x: hidden;
+
+    font-family:
+        Inter,
+        system-ui,
+        sans-serif;
+
+    background: #f4f7fb;
+}
+
+/* =========================
+   HOME LAYOUT
+========================= */
+body {
+
+    background:
+    linear-gradient(
+        135deg,
+        #f8fafc,
+        #eef4ff,
+        #f3f7ff
+    );
+}
+.home {
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    background: #f4f7fb;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+/* =========================
+   MODERN NAVBAR
+========================= */
+
+.modern-header {
+
+    width: calc(100% - 40px);
+
+    margin: 20px auto;
+
+    padding: 16px 28px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background:
+        rgba(255,255,255,0.75);
+
+    backdrop-filter: blur(14px);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.08);
+
+    border:
+        1px solid rgba(255,255,255,0.5);
+
+    box-sizing: border-box;
+}
+
+/* =========================
+   LOGO SECTION
+========================= */
+
+.logo-section {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+}
+
+.brand-logo {
+
+    width: 62px;
+
+    height: 62px;
+
+    min-width: 62px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0066ff,
+            #00a2ff
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: white;
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    box-shadow:
+        0 10px 28px rgba(0,102,255,0.28);
+
+    transition: 0.3s ease;
+}
+
+.brand-logo:hover {
+
+    transform:
+        translateY(-3px)
+        scale(1.05);
+}
+
+.logo-section h1 {
+
+    margin: 0;
+
+    font-size: 42px;
+
+    font-weight: 800;
+
+    letter-spacing: -1px;
+
+    color: #0066ff;
+
+    line-height: 1;
+}
+
+/* =========================
+   NAVIGATION BUTTONS
+========================= */
+
+.header-buttons {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+}
+
+.header-buttons button {
+
+    border: none;
+
+    padding: 13px 22px;
+
+    border-radius: 14px;
+
+    background: #eef2ff;
+
+    color: #1e3a8a;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.04);
+}
+
+.header-buttons button:hover {
+
+    transform:
+        translateY(-2px);
+
+    background: #dbeafe;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.08);
+}
+
+.logout-btn-top {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #dc2626
+        ) !important;
+
+    color: white !important;
+}
+
+.logout-btn-top:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 24px rgba(239,68,68,0.28);
+}
+
+/* =========================
+   CONTENT AREA
+========================= */
+
+.home-content-full {
+
+    width: 100%;
+
+    flex: 1;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    height: 100%;
+}
+
+/* =========================
+   REMOVE OLD SIDEBAR
+========================= */
+
+.home-workspace {
+
+    width: 100%;
+}
+
+.home-menus {
+
+    display: none !important;
+}
+
+.home-content {
+
+    width: 100%;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.home-footer {
+
+    margin-top: 20px;
+
+    padding: 20px;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    color: #64748b;
+
+    background: transparent;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 10px 28px rgba(0,102,255,0.28);
+    }
+    50% {
+        box-shadow: 0 15px 40px rgba(0,102,255,0.4);
+    }
+}
+
+.modern-header {
+    animation: slideInDown 0.6s ease-out;
+}
+
+.brand-logo {
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.header-buttons button {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width: 900px){
+
+    .modern-header {
+
+        flex-direction: column;
+
+        gap: 20px;
+
+        align-items: stretch;
+    }
+
+    .logo-section {
+
+        justify-content: center;
+    }
+
+    .header-buttons {
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+    }
+
+    .logo-section h1 {
+
+        font-size: 34px;
+    }
+}
+
+@media(max-width: 600px){
+
+    .brand-logo {
+
+        width: 54px;
+
+        height: 54px;
+
+        font-size: 24px;
+    }
+
+    .logo-section h1 {
+
+        font-size: 28px;
+    }
+
+    .header-buttons button {
+
+        padding: 12px 18px;
+
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,249 @@
+/* =========================
+   MANAGE USERS
+========================= */
+
+.manage-users {
+
+    padding: 24px;
+}
+
+/* FORM */
+
+.mu-form {
+
+    background: white;
+
+    padding: 28px;
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,0.08);
+
+    margin-bottom: 28px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+.mu-form h2 {
+
+    margin: 0 0 10px;
+
+    color: #0f172a;
+
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+.mu-form input,
+.mu-form select {
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+    border: 1px solid #dbeafe;
+
+    outline: none;
+
+    font-size: 15px;
+
+    transition: 0.3s;
+}
+
+.mu-form input:focus,
+.mu-form select:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,0.1);
+}
+
+/* BUTTONS */
+
+.mu-btns {
+
+    display: flex;
+
+    gap: 14px;
+
+    margin-top: 8px;
+}
+
+.btn-update {
+
+    border: none;
+
+    padding: 12px 22px;
+
+    border-radius: 14px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.btn-update:hover {
+
+    background: #1d4ed8;
+
+    transform: translateY(-2px);
+}
+
+.btn-cancel {
+
+    border: none;
+
+    padding: 12px 22px;
+
+    border-radius: 14px;
+
+    background: #e2e8f0;
+
+    color: #0f172a;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.btn-cancel:hover {
+
+    background: #cbd5e1;
+}
+
+/* TABLE */
+
+.mu-table-container {
+
+    background: white;
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,0.08);
+}
+
+.mu-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.mu-table thead {
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #3b82f6
+        );
+
+    color: white;
+}
+
+.mu-table th,
+.mu-table td {
+
+    padding: 18px;
+
+    text-align: left;
+}
+
+.mu-table tbody tr {
+
+    border-bottom:
+        1px solid #f1f5f9;
+
+    transition: 0.3s;
+}
+
+.mu-table tbody tr:hover {
+
+    background: #f8fafc;
+}
+
+/* ACTION BUTTONS */
+
+.btn-edit {
+
+    border: none;
+
+    padding: 10px 16px;
+
+    border-radius: 12px;
+
+    background: #f59e0b;
+
+    color: white;
+
+    cursor: pointer;
+
+    margin-right: 10px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.btn-edit:hover {
+
+    background: #d97706;
+}
+
+.btn-delete {
+
+    border: none;
+
+    padding: 10px 16px;
+
+    border-radius: 12px;
+
+    background: #ef4444;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.btn-delete:hover {
+
+    background: #dc2626;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 900px) {
+
+    .mu-table {
+
+        font-size: 13px;
+    }
+
+    .mu-table th,
+    .mu-table td {
+
+        padding: 12px;
+    }
+}
