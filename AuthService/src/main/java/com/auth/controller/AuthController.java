@@ -56,6 +56,12 @@ public class AuthController {
     public Object getAllUsers(@PathVariable("page") int page, @PathVariable("limit") int limit, @RequestHeader("Token") String token) {
         return service.getAllUsers(page, limit, token);
     }
+    @PostMapping("/adduser")
+    public Object addUser(
+            @RequestBody Users u1,
+            @RequestHeader("Token") String token) {
+    	return service.signupService(u1);
+    }
 
     @GetMapping("/getuser/{id}")
     public Object getUser(@PathVariable("id") int id, @RequestHeader("Token") String token) {
@@ -77,3 +83,4 @@ public class AuthController {
         return service.deleteUser(id, token);
     }
 }
+
