@@ -76,12 +76,11 @@ const App = () => {
     }
     function forgotPassword() {
 
-    const email =
-        prompt(
-            "Enter your registered email"
-        );
+    const email = prompt(
+        "Enter your registered email"
+    );
 
-    if (!email)
+    if (!email || !email.trim())
         return;
 
     setIsProgress(true);
@@ -91,20 +90,39 @@ const App = () => {
         apibaseurl +
         "/authservice/forgotpassword",
 
-        { email },
+        {
+            email: email.trim()
+        },
 
         null,
 
         forgotPasswordResponse
     );
 }
+
 function forgotPasswordResponse(res) {
 
     setIsProgress(false);
 
-    alert(res.message);
+    if (res.code === 200) {
+
+        alert(res.message);
+
+    } else {
+
+        alert(
+            res.message ||
+            "Failed to reset password"
+        );
+    }
 }
 
+    function signupResponseHandler(res) {
+        alert(res.message);
+        setIsProgress(false);
+        setSignupData({ fullname: "", phone: "", email: "", password: "", retypepassword: "" });
+        finput.current?.focus();
+    }
     function signinResponseHandler(res) {
         console.log(res);  // add this to see full response
         if (res.code != 200)
@@ -114,13 +132,6 @@ function forgotPasswordResponse(res) {
             window.location.replace("/home");
         }
         setIsProgress(false);
-    }
-
-    function signupResponseHandler(res) {
-        alert(res.message);
-        setIsProgress(false);
-        setSignupData({ fullname: "", phone: "", email: "", password: "", retypepassword: "" });
-        finput.current?.focus();
     }
 
     return (
@@ -163,19 +174,15 @@ function forgotPasswordResponse(res) {
                                 <input type='password' className={errorData.password ? 'error' : ''} placeholder='Enter password' name='password' value={signinData.password} onChange={(e) => handleSigninInput(e)} />
                             </div>
                             <p>
-
-    Forgot
-
+    Forgot{" "}
     <span
         onClick={forgotPassword}
+        style={{ cursor: "pointer" }}
     >
-
         Password?
-
     </span>
-
 </p>
-                            <button onClick={() => signin()}>Let's start</button>
+                            <button onClick={() => signin()}>Sign In</button>
                             <label onClick={() => switchWindow()}>Don't have an account? <span>Sign up</span></label>
                         </>
                         :
@@ -205,7 +212,7 @@ function forgotPasswordResponse(res) {
                                 <img src={imgurl + "padlock.png"} alt='' />
                                 <input type='password' className={errorData.retypepassword ? 'error' : ''} placeholder='Re-type your password' autoComplete='off' name='retypepassword' value={signupData.retypepassword} onChange={(e) => handleSignupInput(e)} />
                             </div>
-                            <button onClick={() => signup()}>Register</button>
+                            <button onClick={() => signup()}>Create Account</button>
                             <label onClick={() => switchWindow()}>Already have an account? <span>Sign in</span></label>
                         </>
                     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './ManageUsers.css';
 import { apibaseurl, callApi } from '../lib';
 import ProgressBar from './ProgressBar';
@@ -114,7 +114,7 @@ const ManageUsers = ({ token, logout }) => {
         );
     }
     function addUser() {
-
+console.log(apibaseurl);
         setIsProgress(true);
 
         callApi(

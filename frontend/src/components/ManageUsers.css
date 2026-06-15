@@ -1,249 +1,159 @@
-/* =========================
-   MANAGE USERS
-========================= */
-
 .manage-users {
-
-    padding: 24px;
+    width: min(100%, var(--content-max));
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 28px 16px 44px;
 }
 
-/* FORM */
-
 .mu-form {
-
+    margin-bottom: 20px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
     background: white;
-
-    padding: 28px;
-
-    border-radius: 24px;
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,0.08);
-
-    margin-bottom: 28px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 16px;
+    box-shadow: var(--shadow-sm);
 }
 
 .mu-form h2 {
-
-    margin: 0 0 10px;
-
-    color: #0f172a;
-
-    font-size: 28px;
-
-    font-weight: 700;
+    grid-column: 1 / -1;
+    margin: 0 0 4px;
+    color: var(--text-dark);
+    font-size: 22px;
+    font-weight: 800;
 }
 
 .mu-form input,
 .mu-form select {
-
-    padding: 14px;
-
-    border-radius: 14px;
-
-    border: 1px solid #dbeafe;
-
-    outline: none;
-
-    font-size: 15px;
-
-    transition: 0.3s;
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-md);
+    padding: 0 13px;
+    background: var(--surface-muted);
+    color: var(--text-dark);
+    font-size: 14px;
 }
 
 .mu-form input:focus,
 .mu-form select:focus {
-
-    border-color: #2563eb;
-
-    box-shadow:
-        0 0 0 4px rgba(37,99,235,0.1);
+    outline: none;
+    border-color: var(--primary-blue);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(36, 87, 214, 0.1);
 }
 
-/* BUTTONS */
-
 .mu-btns {
-
+    grid-column: 1 / -1;
     display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
 
-    gap: 14px;
+.btn-update,
+.btn-cancel,
+.btn-edit,
+.btn-delete {
+    border: 0;
+    border-radius: var(--radius-md);
+    font-weight: 800;
+    cursor: pointer;
+}
 
-    margin-top: 8px;
+.btn-update,
+.btn-cancel {
+    min-height: 42px;
+    padding: 0 18px;
 }
 
 .btn-update {
-
-    border: none;
-
-    padding: 12px 22px;
-
-    border-radius: 14px;
-
-    background: #2563eb;
-
+    background: #142033;
     color: white;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: 0.3s;
 }
 
 .btn-update:hover {
-
-    background: #1d4ed8;
-
-    transform: translateY(-2px);
+    transform: translateY(-1px);
+    background: var(--primary-blue);
 }
 
 .btn-cancel {
-
-    border: none;
-
-    padding: 12px 22px;
-
-    border-radius: 14px;
-
-    background: #e2e8f0;
-
-    color: #0f172a;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: 0.3s;
+    background: #eef2f6;
+    color: var(--text-dark);
 }
 
 .btn-cancel:hover {
-
-    background: #cbd5e1;
+    background: #dfe7ef;
 }
 
-/* TABLE */
-
 .mu-table-container {
-
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
     background: white;
-
-    border-radius: 24px;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,0.08);
+    box-shadow: var(--shadow-sm);
 }
 
 .mu-table {
-
     width: 100%;
-
+    min-width: 780px;
     border-collapse: collapse;
-}
-
-.mu-table thead {
-
-    background:
-        linear-gradient(
-            135deg,
-            #2563eb,
-            #3b82f6
-        );
-
-    color: white;
+    font-size: 14px;
 }
 
 .mu-table th,
 .mu-table td {
-
-    padding: 18px;
-
+    padding: 15px 16px;
     text-align: left;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.mu-table tbody tr {
+.mu-table th {
+    background: #f8fafc;
+    color: var(--text-gray);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
 
-    border-bottom:
-        1px solid #f1f5f9;
-
-    transition: 0.3s;
+.mu-table td {
+    color: var(--text-dark);
 }
 
 .mu-table tbody tr:hover {
-
-    background: #f8fafc;
+    background: #fbfcfe;
 }
 
-/* ACTION BUTTONS */
+.btn-edit,
+.btn-delete {
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 12px;
+    margin-right: 8px;
+}
 
 .btn-edit {
-
-    border: none;
-
-    padding: 10px 16px;
-
-    border-radius: 12px;
-
-    background: #f59e0b;
-
-    color: white;
-
-    cursor: pointer;
-
-    margin-right: 10px;
-
-    font-weight: 600;
-
-    transition: 0.3s;
-}
-
-.btn-edit:hover {
-
-    background: #d97706;
+    background: #edf4ff;
+    color: var(--primary-blue);
 }
 
 .btn-delete {
-
-    border: none;
-
-    padding: 10px 16px;
-
-    border-radius: 12px;
-
-    background: #ef4444;
-
-    color: white;
-
-    cursor: pointer;
-
-    font-weight: 600;
-
-    transition: 0.3s;
+    background: #fff1f2;
+    color: #b42318;
 }
 
-.btn-delete:hover {
-
-    background: #dc2626;
-}
-
-/* RESPONSIVE */
-
-@media(max-width: 900px) {
-
-    .mu-table {
-
-        font-size: 13px;
+@media (max-width: 720px) {
+    .manage-users {
+        padding: 18px 10px 34px;
     }
 
-    .mu-table th,
-    .mu-table td {
+    .mu-form {
+        grid-template-columns: 1fr;
+    }
 
-        padding: 12px;
+    .mu-btns {
+        flex-direction: column;
     }
 }

@@ -1,3 +1,5 @@
+from urllib import response
+
 from fastapi import FastAPI, APIRouter, Header
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
@@ -50,6 +52,26 @@ async def signup(user: SignupSchema):
             "http://localhost:8001/authservice/signup",
             json=user.model_dump()
         )
+    return response.json()
+from pydantic import BaseModel
+
+class ForgotPasswordSchema(BaseModel):
+    email: str
+
+
+@router.post("/authservice/forgotpassword")
+async def forgotpassword(
+    data: ForgotPasswordSchema
+):
+    print(data)
+
+    async with httpx.AsyncClient() as client:
+
+        response = await client.post(
+            "http://localhost:8001/authservice/forgotpassword",
+            json=data.model_dump()
+        )
+
     return response.json()
 
 # ─────────────────────────────────────────────
@@ -151,7 +173,6 @@ async def adduser(
     )
 
     return response.json()
-
 # ─────────────────────────────────────────────
 #  NEWS SERVICE — USER + ADMIN (token required)
 # ─────────────────────────────────────────────
@@ -161,7 +182,7 @@ async def getarticles(page: int, limit: int, Token: str = Header(...)):
     print(Token)
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            f"http://localhost:8002/newsservice/getarticles/{page}/{limit}",
+            f"http://localhost:8004/newsservice/getarticles/{page}/{limit}",
             headers={"Token": Token}
         )
     return response.json()
@@ -171,7 +192,7 @@ async def getarticle(id: int, Token: str = Header(...)):
     print(Token)
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            f"http://localhost:8002/newsservice/getarticle/{id}",
+            f"http://localhost:8004/newsservice/getarticle/{id}",
             headers={"Token": Token}
         )
     return response.json()
@@ -181,7 +202,7 @@ async def getarticlesbycategory(category: str, page: int, limit: int, Token: str
     print(Token)
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            f"http://localhost:8002/newsservice/getarticlesbycategory/{category}/{page}/{limit}",
+            f"http://localhost:8004/newsservice/getarticlesbycategory/{category}/{page}/{limit}",
             headers={"Token": Token}
         )
     return response.json()
@@ -191,7 +212,7 @@ async def getarticlesbysource(source: str, page: int, limit: int, Token: str = H
     print(Token)
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            f"http://localhost:8002/newsservice/getarticlesbysource/{source}/{page}/{limit}",
+            f"http://localhost:8004/newsservice/getarticlesbysource/{source}/{page}/{limit}",
             headers={"Token": Token}
         )
     return response.json()
@@ -201,7 +222,7 @@ async def search(keyword: str, page: int, limit: int, Token: str = Header(...)):
     print(Token)
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            f"http://localhost:8002/newsservice/search/{keyword}/{page}/{limit}",
+            f"http://localhost:8004/newsservice/search/{keyword}/{page}/{limit}",
             headers={"Token": Token}
         )
     return response.json()
@@ -211,7 +232,7 @@ async def getcategories(Token: str = Header(...)):
     print(Token)
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            "http://localhost:8002/newsservice/getcategories",
+            "http://localhost:8004/newsservice/getcategories",
             headers={"Token": Token}
         )
     return response.json()
@@ -221,9 +242,31 @@ async def getsources(Token: str = Header(...)):
     print(Token)
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            "http://localhost:8002/newsservice/getsources",
+            "http://localhost:8004/newsservice/getsources",
             headers={"Token": Token}
         )
+    return response.json()
+@router.post(
+    "/newsservice/savereadingactivity"
+)
+async def savereadingactivity(
+    data: dict,
+    Token: str = Header(...)
+):
+
+    async with httpx.AsyncClient() as client:
+
+        response = await client.post(
+
+            "http://localhost:8004/newsservice/savereadingactivity",
+
+            json=data,
+
+            headers={
+                "Token": Token
+            }
+        )
+
     return response.json()
 
 # ─────────────────────────────────────────────
@@ -235,7 +278,7 @@ async def savearticle(article: ArticleSchema, Token: str = Header(...)):
     print(Token)
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            "http://localhost:8002/newsservice/savearticle",
+            "http://localhost:8004/newsservice/savearticle",
             json=article.model_dump(),
             headers={"Token": Token}
         )
@@ -246,7 +289,7 @@ async def updatearticle(id: int, article: ArticleSchema, Token: str = Header(...
     print(Token)
     async with httpx.AsyncClient() as client:
         response = await client.put(
-            f"http://localhost:8002/newsservice/updatearticle/{id}",
+            f"http://localhost:8004/newsservice/updatearticle/{id}",
             json=article.model_dump(),
             headers={"Token": Token}
         )
@@ -257,33 +300,70 @@ async def deletearticle(id: int, Token: str = Header(...)):
     print(Token)
     async with httpx.AsyncClient() as client:
         response = await client.delete(
-            f"http://localhost:8002/newsservice/deletearticle/{id}",
+            f"http://localhost:8004/newsservice/deletearticle/{id}",
             headers={"Token": Token}
         )
     return response.json()
 
 @router.post("/newsservice/savecategory")
 async def savecategory(category: CategorySchema, Token: str = Header(...)):
-    print(Token)
+
+    payload = {
+        "category": category.name
+    }
+
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            "http://localhost:8002/newsservice/savecategory",
-            json=category.model_dump(),
+            "http://localhost:8004/newsservice/savecategory",
+            json=payload,
             headers={"Token": Token}
         )
-    return response.json()
 
+    return response.json()
 @router.post("/newsservice/savesource")
 async def savesource(source: SourceSchema, Token: str = Header(...)):
     print(Token)
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            "http://localhost:8002/newsservice/savesource",
+            "http://localhost:8004/newsservice/savesource",
             json=source.model_dump(),
             headers={"Token": Token}
         )
     return response.json()
 
+@router.get("/newsservice/fetchnews")
+async def fetchnews(Token: str = Header(...)):
+
+    timeout = httpx.Timeout(120.0)
+
+    async with httpx.AsyncClient(timeout=timeout) as client:
+
+        response = await client.get(
+            "http://localhost:8004/newsservice/fetchnews",
+            headers={"Token": Token}
+        )
+
+    return response.json()
+@router.get(
+    "/newsservice/semanticsearch/{query}"
+)
+async def semanticsearch(
+    query: str,
+    Token: str = Header(...)
+):
+
+    async with httpx.AsyncClient() as client:
+
+        response = await client.get(
+
+            f"http://localhost:8004/newsservice/semanticsearch/{query}",
+
+            headers={
+                "Token": Token
+            }
+        )
+
+    return response.json()
 # ─────────────────────────────────────────────
 #  BOOKMARK SERVICE — USER + ADMIN (token required)
 # ─────────────────────────────────────────────

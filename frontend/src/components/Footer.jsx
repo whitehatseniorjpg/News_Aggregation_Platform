@@ -56,7 +56,7 @@ const Footer = () => {
 
             <div className="footer-bottom">
 
-                © 2026 NewsSphere.
+                Copyright 2026 NewsSphere.
                 All rights reserved.
 
             </div>

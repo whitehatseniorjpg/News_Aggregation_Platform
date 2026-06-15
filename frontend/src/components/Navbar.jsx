@@ -15,12 +15,15 @@ const Navbar = ({ logout }) => {
             <div className="navbar-right">
 
                 <button className="nav-btn">
-                    Home
-                </button>
+    🏠 Home
+</button>
 
-                <button className="nav-btn">
-                    Bookmarks
-                </button>
+               <button className="nav-btn">
+    📚 Bookmarks
+</button>
+<button className="nav-btn">
+    🔍 AI Search
+</button>
 
                 <button className="logout-btn"
                     onClick={logout}

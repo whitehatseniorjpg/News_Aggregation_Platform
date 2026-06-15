@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import './NewsFeed.css';
 
@@ -8,58 +8,53 @@ import ProgressBar from './ProgressBar';
 
 import HeroSection from './HeroSection';
 import CategoryBar from './CategoryBar';
-import NewsGrid from './NewsGrid';
 import Footer from './Footer';
 
 const NewsFeed = ({ token, logout }) => {
 
     const [articles, setArticles] = useState([]);
     const [loaded, setLoaded] = useState(false);
-   const [categories] = useState([
-    { id: 1, category: "Sports" },
-    { id: 2, category: "Technology" },
-    { id: 3, category: "Business" },
-    { id: 4, category: "Health" },
-    { id: 5, category: "Science" },
-    { id: 6, category: "Entertainment" },
-    { id: 7, category: "Politics" }
-]);
+   const [categories,setCategories] = useState([]);
     const [isProgress, setIsProgress] = useState(false);
 
     const [page, setPage] = useState(1);
+    const getCategoryName = (id) => {
+
+        const category =
+            categories.find(
+                c => c.id === id
+            );
+
+        return category
+            ? category.category
+            : "News";
+    };
 
     const [selectedCategory, setSelectedCategory] = useState("");
 
     const [searchKeyword, setSearchKeyword] = useState("");
 
     const limit = 10;
-
-    const categoryMap = {
-        1: "Sports",
-        2: "Technology",
-        3: "Business",
-        4: "Health",
-        5: "Science",
-        6: "Entertainment",
-        7: "Politics"
-    };
-
+    
     useEffect(() => {
+    const storedtoken =
+        localStorage.getItem("token");
 
-        const storedtoken =
-            localStorage.getItem("token");
+    if (!storedtoken)
+        return logout();
 
-        if (!storedtoken)
-            return logout();
+    loadArticles(
+        storedtoken,
+        1,
+        "",
+        ""
+    );
 
-        loadArticles(
-            storedtoken,
-            1,
-            "",
-            ""
-        );
+    loadCategories(
+        storedtoken
+    );
 
-    }, []);
+}, []);
 
    function loadArticles(
     storedtoken,
@@ -73,15 +68,14 @@ const NewsFeed = ({ token, logout }) => {
 
     const t = storedtoken || token;
 
-    let url = "";
+    let url;
 
-    // SEARCH
-    if (keyword) {
+    // SEMANTIC SEARCH
+if (keyword) {
 
-        url =
-        `${apibaseurl}/newsservice/search/${keyword}/${pg}/${limit}`;
-    }
-
+    url =
+    `${apibaseurl}/newsservice/semanticsearch/${keyword}`;
+}
     // CATEGORY
     else if (category) {
 
@@ -119,7 +113,24 @@ const NewsFeed = ({ token, logout }) => {
         t
     );
 }
+function loadCategories(storedtoken) {
 
+    callApi(
+        "GET",
+        apibaseurl + "/newsservice/getcategories",
+        null,
+        null,
+
+        (res) => {
+
+            setCategories(
+                res.categories || []
+            );
+        },
+
+        storedtoken || token
+    );
+}
     function handleSearch() {
 
         if (!searchKeyword.trim())
@@ -137,26 +148,34 @@ const NewsFeed = ({ token, logout }) => {
         );
     }
 
-    function addBookmark(articleId) {
+    function addBookmark(article) {
+        console.log("Article:", article);
 
-        callApi(
-            "POST",
+    callApi(
+        "POST",
+        apibaseurl + "/bookmarkservice/addbookmark",
 
-            apibaseurl +
-            "/bookmarkservice/addbookmark",
+        {
+            articleId: article.id,
+            title: article.title,
+            summary: article.summary,
+            url: article.url,
+            imageUrl: article.imageUrl,
+            category: article.category,
+            source: article.source,
+            published_at: article.published_at
+        },
 
-            {
-                article_id: articleId
-            },
+        null,
+(res) => {
+    console.log("Bookmark Response:", res);
+    alert(
+    "Article bookmarked successfully!"
+);
+},
 
-            null,
-
-            (res) => {
-                alert(res.message);
-            },
-
-            token
-        );
+        token
+    );
     }
 
     function handlePrev() {
@@ -199,31 +218,43 @@ const NewsFeed = ({ token, logout }) => {
 
             <div className='newsfeed-toolbar'>
 
-                <div className='search-group'>
+               <div className="search-box-wrapper">
 
-                    <input
-                        type='text'
-                        placeholder='Search latest news...'
+    <h2>
+        AI Powered Semantic Search
+    </h2>
 
-                        value={searchKeyword}
+    <p>
+        Search using HuggingFace Embeddings
+        and MongoDB Atlas Vector Search
+    </p>
 
-                        onChange={(e) =>
-                            setSearchKeyword(e.target.value)
-                        }
+    <div className="search-group">
 
-                        onKeyDown={(e) =>
-                            e.key === 'Enter'
-                            && handleSearch()
-                        }
-                    />
+        <input
+            type="text"
+            placeholder="Search latest news..."
+            value={searchKeyword}
+            onChange={(e) =>
+                setSearchKeyword(
+                    e.target.value
+                )
+            }
+            onKeyDown={(e) =>
+                e.key === "Enter" &&
+                handleSearch()
+            }
+        />
 
-                    <button
-                        onClick={handleSearch}
-                    >
-                        Search
-                    </button>
+        <button
+            onClick={handleSearch}
+        >
+            Semantic Search
+        </button>
 
-                </div>
+    </div>
+
+</div>
 
             </div>
 </div>
@@ -279,18 +310,16 @@ const NewsFeed = ({ token, logout }) => {
             />
 
             <div className="news-card-content">
-
                 <span className="news-category">
 
-                    {
-                        categoryMap[
-                            a.category_id ||
-                            a.categoryId
-                        ] || "News"
-                    }
+    {
+        getCategoryName(
+            a.category_id ||
+            a.categoryId
+        )
+    }
 
-                </span>
-
+</span>
                 <h2>
                     {a.title}
                 </h2>
@@ -304,21 +333,53 @@ const NewsFeed = ({ token, logout }) => {
 
                 <div className="news-actions">
 
-                    <a
-                        href={
-                            a.url || "#"
-                        }
+                   <a
+    href={
+        a.url || "#"
+    }
 
-                        target="_blank"
+    target="_blank"
 
-                        rel="noreferrer"
-                    >
-                        Read More
-                    </a>
+    rel="noreferrer"
+
+    onClick={() => {
+
+        callApi(
+
+            "POST",
+
+            apibaseurl +
+            "/newsservice/savereadingactivity",
+
+            {
+
+                article_id:
+                    a.id,
+
+                article_title:
+                    a.title
+
+            },
+
+            null,
+
+            (res) => {
+
+                console.log(
+                    res
+                );
+            },
+
+            token
+        );
+    }}
+>
+    Read More
+</a>
 
                     <button
                         onClick={() =>
-                            addBookmark(a.id)
+                            addBookmark(a)
                         }
                     >
                         Bookmark
@@ -338,24 +399,29 @@ const NewsFeed = ({ token, logout }) => {
     
 }
             <div className='pagination'>
+<button
+    onClick={handlePrev}
+    disabled={
+        page === 1 ||
+        searchKeyword
+    }
+>
+    Previous
+</button>
 
-                <button
-                    onClick={handlePrev}
-                    disabled={page === 1}
-                >
-                    Previous
-                </button>
+<span>
+    Page {page}
+</span>
 
-                <span>
-                    Page {page}
-                </span>
-
-                <button
-                    onClick={handleNext}
-                    disabled={articles.length < limit}
-                >
-                    Next
-                </button>
+<button
+    onClick={handleNext}
+    disabled={
+        searchKeyword ||
+        articles.length < limit
+    }
+>
+    Next
+</button>
 
             </div>
 
@@ -368,5 +434,4 @@ const NewsFeed = ({ token, logout }) => {
         </div>
     );
 }
-
 export default NewsFeed;

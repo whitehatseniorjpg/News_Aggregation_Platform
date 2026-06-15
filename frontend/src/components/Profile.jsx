@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Profile.css';
 import ProgressBar from './ProgressBar';
 import { apibaseurl, callApi, imgurl } from '../lib';
@@ -7,17 +7,17 @@ const Profile = ({ logout }) => {
     const [data, setData] = useState(null);
     const [isProgress, setIsProgress] = useState(false);
 
-    useEffect(() => {
-        const storedtoken = localStorage.getItem("token");
-        if (!storedtoken) return logout();
-        setIsProgress(true);
-        callApi("GET", apibaseurl + "/authservice/profile", null, null, loadData, storedtoken);
-    }, []);
-
     function loadData(res) {
         setData(res);
         setIsProgress(false);
     }
+
+    useEffect(() => {
+        const storedtoken = localStorage.getItem("token");
+        if (!storedtoken) return logout();
+        queueMicrotask(() => setIsProgress(true));
+        callApi("GET", apibaseurl + "/authservice/profile", null, null, loadData, storedtoken);
+    }, []);
 
     if (!data) return ("");
 

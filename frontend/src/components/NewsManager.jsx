@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './NewsManager.css';
 import { apibaseurl, callApi } from '../lib';
 import ProgressBar from './ProgressBar';
@@ -10,23 +10,30 @@ const NewsManager = ({ token, logout }) => {
     const [isProgress, setIsProgress] = useState(false);
     const [page, setPage] = useState(1);
     const limit = 10;
-    const categoryMap = {
+    const getCategoryName = (id) => {
 
-        1: "Sports",
-        2: "Technology",
-        3: "Business",
-        4: "Health",
-        5: "Science",
-        6: "Entertainment"
-    };
+    const category =
+        categories.find(
+            c => c.id === id
+        );
 
-    const sourceMap = {
+    return category
+        ? category.category
+        : id;
+};
 
-        1: "ESPN",
-        2: "TechCrunch",
-        3: "BBC",
-        4: "NDTV"
-    };
+const getSourceName = (id) => {
+
+    const source =
+        sources.find(
+            s => s.id === id
+        );
+
+    return source
+        ? source.name
+        : id;
+};
+
 
     const emptyForm = { title: "", summary: "", content: "", url: "", image_url: "", source_id: "", category_id: "" };
     const [form, setForm] = useState(emptyForm);
@@ -89,9 +96,9 @@ const NewsManager = ({ token, logout }) => {
 
             console.log(res);
 
-            setCategories(
-                res || []
-            );
+           setCategories(
+    res.categories || []
+);
         },
 
         storedtoken || token
@@ -109,9 +116,9 @@ const NewsManager = ({ token, logout }) => {
 
             console.log(res);
 
-            setSources(
-                res || []
-            );
+           setSources(
+    res.sources || []
+);
         },
 
         storedtoken || token
@@ -328,22 +335,17 @@ const NewsManager = ({ token, logout }) => {
                             <tr key={a.id}>
                                 <td>{(page - 1) * limit + i + 1}</td>
                                 <td>{a.title}</td>
+                                
+
+                                    <td>
+    {getCategoryName(a.category_id)}
+</td>
+
                                 <td>
-
-                                    {
-                                        categoryMap?.[a.category_id]
-                                        || a.category_id
-                                    }
-
-                                </td>
-                                <td>
-
-                                    {
-                                        sourceMap?.[a.source_id]
-                                        || a.source_id
-                                    }
-
-                                </td>
+<td>
+    {a.source_id} - {getSourceName(a.source_id)}
+</td></td>
+                                
                                 <td>
                                     <button className='btn-edit' onClick={() => editArticle(a)}>Edit</button>
                                     <button className='btn-delete' onClick={() => deleteArticle(a.id)}>Delete</button>

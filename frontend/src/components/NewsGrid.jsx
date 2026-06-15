@@ -1,50 +1,20 @@
-const NewsCard = ({
-    article,
-    categoryMap,
-    addBookmark
-}) => {
-
-    if (!article)
-        return null;
+const NewsGrid = ({ articles = [] }) => {
     return (
-
-    <div className="news-grid">
-
-        {
-            articles.map((a) => (
-
-                <div
-                    key={a.id}
-
-                    style={{
-                        background: "white",
-                        padding: "20px",
-                        borderRadius: "20px",
-                        marginBottom: "20px"
-                    }}
-                >
-
-                    <h1>
-                        {a.title}
-                    </h1>
-
+        <div className="news-grid">
+            {articles.map((article) => (
+                <article className="news-card" key={article.id}>
                     <img
-                        src={a.imageUrl}
-                        style={{
-                            width: "100%",
-                            height: "250px",
-                            objectFit: "cover"
-                        }}
+                        src={article.image_url || article.imageUrl || "https://via.placeholder.com/400x240"}
+                        alt={article.title || "News"}
                     />
-
-                </div>
-
-            ))
-        }
-
-    </div>
-);
-
+                    <div className="news-card-content">
+                        <h2>{article.title}</h2>
+                        <p>{article.summary || "No summary available"}</p>
+                    </div>
+                </article>
+            ))}
+        </div>
+    );
 }
 
-export default NewsCard;
+export default NewsGrid;

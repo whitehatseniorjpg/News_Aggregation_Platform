@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Home.css';
-import { apibaseurl, callApi, imgurl } from '../lib';
+import { apibaseurl, callApi } from '../lib';
 import ProgressBar from './ProgressBar';
 import Profile from './Profile';
 import NewsFeed from './NewsFeed';
@@ -21,8 +21,10 @@ const Home = () => {
         if (!storedtoken)
             logout();
         else {
-            setToken(storedtoken);
-            setIsProgress(true);
+            queueMicrotask(() => {
+                setToken(storedtoken);
+                setIsProgress(true);
+            });
             callApi("GET", apibaseurl + "/authservice/uinfo", null, null, loadUinfo, storedtoken);
         }
     }, []);
@@ -108,6 +110,7 @@ const Home = () => {
         <h1>
             NewsSphere
         </h1>
+        {fullname && <span className="user-greeting">Hi, {fullname}</span>}
 
     </div>
 

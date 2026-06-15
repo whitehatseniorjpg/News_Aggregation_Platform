@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Bookmarks.css';
 import { apibaseurl, callApi } from '../lib';
 import ProgressBar from './ProgressBar';

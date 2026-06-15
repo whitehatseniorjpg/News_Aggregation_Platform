@@ -35,4 +35,12 @@ class SourceSchema(BaseModel):
     type: str
 
 class BookmarkSchema(BaseModel):
-    article_id: int
+    articleId: int
+    title: str
+    summary: str
+    url: str
+
+    imageUrl: Optional[str] = None
+    category: Optional[str] = None
+    source: Optional[str] = None
+    published_at: Optional[str] = None
