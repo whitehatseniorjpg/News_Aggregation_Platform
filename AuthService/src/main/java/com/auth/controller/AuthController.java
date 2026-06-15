@@ -37,6 +37,15 @@ public class AuthController {
     public Object signup(@RequestBody Users u1) {
         return service.signupService(u1);
     }
+    @PostMapping("/forgotpassword")
+    public Object forgotPassword(
+        @RequestBody Map<String,String> data
+    ) {
+
+        return service.forgotPassword(
+            data.get("email")
+        );
+    }
 
     // ── USER + ADMIN ──────────────────────────────────────────────────────────
 

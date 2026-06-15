@@ -204,4 +204,62 @@ public class UsersService {
             return response;
         }
     }
+    public Object forgotPassword(String email) {
+
+        Map<String, Object> response =
+            new HashMap<>();
+
+        try {
+
+            Users user =
+                repo.findByEmail(email);
+
+            if(user == null) {
+
+                response.put("code", 404);
+                response.put(
+                    "message",
+                    "Email not registered"
+                );
+
+                return response;
+            }
+
+            String tempPassword =
+                "Temp" +
+                System.currentTimeMillis()
+                % 10000;
+
+            user.setPassword(
+                tempPassword
+            );
+
+            repo.save(user);
+
+            response.put(
+                "code",
+                200
+            );
+
+            response.put(
+                "message",
+                "Temporary Password: "
+                + tempPassword
+            );
+
+        } catch(Exception e) {
+
+            response.put(
+                "code",
+                500
+            );
+
+            response.put(
+                "message",
+                e.getMessage()
+            );
+        }
+
+        return response;
+    }
 }
