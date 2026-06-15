@@ -37,6 +37,15 @@ public class AuthController {
     public Object signup(@RequestBody Users u1) {
         return service.signupService(u1);
     }
+    @PostMapping("/forgotpassword")
+    public Object forgotPassword(
+        @RequestBody Map<String,String> data
+    ) {
+
+        return service.forgotPassword(
+            data.get("email")
+        );
+    }
 
     // ── USER + ADMIN ──────────────────────────────────────────────────────────
 
@@ -55,6 +64,12 @@ public class AuthController {
     @GetMapping("/getallusers/{page}/{limit}")
     public Object getAllUsers(@PathVariable("page") int page, @PathVariable("limit") int limit, @RequestHeader("Token") String token) {
         return service.getAllUsers(page, limit, token);
+    }
+    @PostMapping("/adduser")
+    public Object addUser(
+            @RequestBody Users u1,
+            @RequestHeader("Token") String token) {
+    	return service.signupService(u1);
     }
 
     @GetMapping("/getuser/{id}")
@@ -77,3 +92,4 @@ public class AuthController {
         return service.deleteUser(id, token);
     }
 }
+
